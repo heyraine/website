@@ -1,0 +1,67 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Hey Raine!</title>
+    <link rel="shortcut icon" type="image/png" href="{% static "simple/img/logo_16x16.png" %}"/>
+
+    <!-- Bootstrap -->
+    <link href="{% static "simple/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "simple/css/main-theme.css" rel="stylesheet" %}">
+    <style>
+    @font-face { font-family: Proxima; font-weight: bold; src: url("{% static "simple/font/Proxima Nova Bold.otf" %}"); }
+    @font-face { font-family: Proxima; src: url("{% static "simple/font/Proxima Nova Reg.otf" %}");}
+    .btn-xlarge {
+    padding: 18px 28px;
+    font-size: 3em;
+    line-height: normal;
+    -webkit-border-radius: 8px;
+       -moz-border-radius: 8px;
+            border-radius: 8px;
+    }
+    .top-buffer1 { margin-top:2vh; }
+    .top-buffer2 { margin-top:5vh; }
+    .top-buffer3 { margin-top:9vh; }
+    </style>
+</head>
+<body style="background:#8990C7; color:#FFF">
+    <div class="container-fliud" style="margin-top:20vh">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 vcenter">
+                <img class="center-block" src="{% static "simple/img/logo.png" %}" style="height:8vh"/>
+            </div>
+        </div>
+        <div class="row top-buffer1">
+            <div class="col-lg-12 col-md-12 vcenter">
+                <h1 style="font-size:12vh; font-family:Proxima;font-weight: bold; text-align:center">Hey Raine</h1>
+            </div>
+        </div>
+        <div class="row top-buffer2">
+            <div class="col-lg-12 col-md-12 vcenter">
+                <p style="font-size:3vh; font-family:Proxima; text-align:center">Please enter your email address to get started :)</p>
+            </div>
+        </div>
+        <div class="row top-buffer1">
+            <div class="col-lg-12 col-md-12 vcenter">
+                <div class="center-block form-group" style="width:17vw; text-align:center;">
+                    <form method="POST" action="{% url 'simple:raine' %}">
+                    {% csrf_token %}
+                    <label for="usr">Email:</label>
+                    <input type="text" class="form-control" id="usr" style="height:5vh" name="textfield">
+                    <button type="submit" class="center-block btn btn-default btn-xlarge" role="button" style="font-family:Proxima;text-align:center; color:#8990C7; width:17vw">Start Talking!</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row top-buffer2">
+            <div class="col-lg-12 col-md-12 vcenter">
+                    <a type="submit" href="{% url 'simple:raine' %}" class="center-block btn btn-default btn-xlarge" role="button" style="font-family:Proxima;text-align:center; color:#8990C7; width:17vw">Start Talking!</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
