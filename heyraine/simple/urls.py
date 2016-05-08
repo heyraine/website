@@ -6,6 +6,6 @@ import views
 
 urlpatterns = patterns('',
     url(r'^$', views.home, name='home'),
-    url(r'^raine/$', views.raine, name='raine')
+    url(r'^raine/', views.raine, name='raine')
 )
 #(?P<email>\d+)/

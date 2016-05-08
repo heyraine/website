@@ -47,11 +47,11 @@
         <div class="row top-buffer1">
             <div class="col-lg-12 col-md-12 vcenter">
                 <div class="center-block form-group" style="width:17vw; text-align:center;">
-                    <form method="POST" action="{% url 'simple:raine' %}">
+                    <form role="form" method="post" action=".">
                     {% csrf_token %}
-                    <label for="usr">Email:</label>
-                    <input type="text" class="form-control" id="usr" style="height:5vh" name="textfield">
-                    <button type="submit" class="center-block btn btn-default btn-xlarge" role="button" style="font-family:Proxima;text-align:center; color:#8990C7; width:17vw">Start Talking!</button>
+                    <!--<label for="usr">Email:</label>-->
+                    {{ form }}
+                    <input type="submit" class="center-block btn btn-default btn-xlarge" role="button" style="font-family:Proxima;text-align:center; color:#8990C7; width:17vw" value="Start Talking!"/>
                     </form>
                 </div>
             </div>
