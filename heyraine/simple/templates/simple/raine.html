@@ -1,1 +1,9 @@
-test
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body style="height:100%;margin: 0;">
+    <iframe src="{{ room_url }}{{ roomID }}" width="100%" height="500px" scrolling="yes"></iframe>
+</body>
+</html>

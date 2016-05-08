@@ -10,7 +10,7 @@ from watson_developer_cloud import ToneAnalyzerV3Beta
 
 #global variables - const
   #my auth key
-auth = "NmQ5MGQ0NzYtOWI4OS00ODc1LTgyYmItZGE2YzdhMjU1OGM2NDQ0OWVhYmEtNGJl" 
+auth = "NmQ5MGQ0NzYtOWI4OS00ODc1LTgyYmItZGE2YzdhMjU1OGM2NDQ0OWVhYmEtNGJl"
 headers = {"Authorization":"Bearer " + auth}
 
 def main():
@@ -21,21 +21,21 @@ def main():
                                   #or as variable and pass it
   personID = (person_json['personId'])
   #personDisplayName = (person_json['personDisplayName'])
-  
+
   count = 0
   sendFirstMessage(roomID)
   while (count < 3): #run 3 times. 3 responses from user,
                       #3 responses from Watson.
-    messages_json = _getMessages(roomID, personID)    
+    messages_json = _getMessages(roomID, personID)
     personMessage = (messages_json['items'][0]['text'])
-    print("person: " + personMessage)#give personMessage to Watson
+    #print("person: " + personMessage)#give personMessage to Watson
     sendMessage(roomID, personMessage)
     count += 1
-    
+
   deleteRoom(roomID, room_json)
 
 
-def makeRoom():
+def makeRoom(headers):
   url = "https://api.ciscospark.com/v1/rooms"
   req = requests.post(url,\
                     json = { "title" : "new room 1" },\
@@ -44,10 +44,10 @@ def makeRoom():
   return room_json
 
 
-def addPerson(roomID):
+def addPerson(roomID,personEmail):
   #personEmail will be given from the textbox of website
-  personEmail = input("Please enter your email: ")
-  print("\n")
+  #personEmail = input("Please enter your email: ")
+  #print("\n")
   #personEmail will be given from the textbox of website
 
   url = "https://api.ciscospark.com/v1/memberships"
@@ -67,7 +67,7 @@ def sendFirstMessage(roomID):
                     json = { "roomId": roomID,\
                              "text": messageToSend },\
                     headers = headers)
-  print("bot: " + messageToSend + '\n')
+  #print("bot: " + messageToSend + '\n')
 
 
 def sendMessage(roomID, personMessage):
@@ -75,12 +75,12 @@ def sendMessage(roomID, personMessage):
   topEmotionList = getWatsonResponse(personMessage)
   messageToSend = "I believe you are feeling " + topEmotionList[0] +\
                   " " + topEmotionList[1]
-  
+
   req = requests.post(url,\
                     json = { "roomId": roomID,\
                              "text": messageToSend },\
-                    headers = headers)  
-  print("bot: " + messageToSend + '\n')
+                    headers = headers)
+  #print("bot: " + messageToSend + '\n')
 
 
 def getWatsonResponse(personMessage):
@@ -91,10 +91,10 @@ def getWatsonResponse(personMessage):
   tone_output = json.dumps(tone_analyzer.tone\
                            (text = personMessage), indent = 2)
   tone_json = json.loads(tone_output)
-  
+
   fiveEmotions = tone_json['document_tone']['tone_categories'][0]['tones']
   topEmotion = analyzeEmotion(fiveEmotions)
-  
+
   fiveSocials = tone_json['document_tone']['tone_categories'][2]['tones']
   topSocial = analyzeSocial(fiveSocials)
 
@@ -143,7 +143,7 @@ def getMessages(roomID):
 
 
 def deleteRoom(roomID, room_json):
-  readyToDelete = input ("Press enter to delete the room and exit ")
+  #readyToDelete = input ("Press enter to delete the room and exit ")
   url = "https://api.ciscospark.com/v1/rooms/" + roomID
   req = requests.delete(url, json = room_json, headers = headers)
 
