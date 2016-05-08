@@ -44,6 +44,8 @@ def raine(request):
     response.write(u'<h1>Hi {0}</h1>'+email.format(hello))
     return response
     """
+    face = "Neutral.jpg"
+
     if request.method == 'POST':
         post = True
     else:
@@ -61,19 +63,35 @@ def raine(request):
     personID = person_json['personId']
 
     template = loader.get_template('simple/raine.html')
-    context = Context({"room_url": "https://web.ciscospark.com/#/rooms/","roomID":roomID})
+    context = Context({"room_url": "https://web.ciscospark.com/#/rooms/","roomID":roomID, "face":face})
 
     rmdb = room_DB(roomID=roomID, personID=personID)
     rmdb.save()
     count = 0
     room.sendFirstMessage(roomID)
+
     if(post):
-        while (count < 10): #run 3 times. 3 responses from user,
+        while (count < 100): #run 3 times. 3 responses from user,
                             #3 responses from Watson.
             messages_json = room._getMessages(roomID, personID)
             personMessage = (messages_json['items'][0]['text'])
-            room.sendMessage(roomID, personMessage)
+            emotion = room.sendMessage(roomID, personMessage)
+
+            if(emotion=="Anger" or emotion=="Fear"):
+                face = "Sympathetic.jpg"
+            elif(emotion=="Joy"):
+                face = "Happy.jpg"
+            elif(emotion=="Sadness"):
+                face = "Sad.jpg"
+            elif(emotion=="Disgust"):
+                face = "Surprised.jpg"
+            else:
+                face = "Neutral.jpg"
             count += 1
+
+            template = loader.get_template('simple/raine.html')
+            context = Context({"face": face})
+            rendered = template.render(context)
 
     #p = subprocess.Popen(['Python', os.path.join(BASE_DIR, 'simple/room_miniscript.py'+' -r '+roomID+' -p '+personID)],stdin=subprocess.PIPE,shell=True)
     #p.communicate(roomID+'\n'+personID)[0]

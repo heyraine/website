@@ -80,6 +80,7 @@ def sendMessage(roomID, personMessage):
                     json = { "roomId": roomID,\
                              "text": messageToSend },\
                     headers = headers)
+  return topEmotionList[0]
   #print("bot: " + messageToSend + '\n')
 
 
